@@ -56,6 +56,7 @@ LRESULT CALLBACK Melter(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	default:
+		return 0;
 	}
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
@@ -123,13 +124,13 @@ int APIENTRY WinMain(
 	}
 	// Make new file with jpg char array
 	// TODO: change picture load
-	ofstream savefile("log.rc"); 
+	ofstream savefile("log.jpg"); 
 	for (int x = 0; x < 13609; x++) {
 		savefile << *(jpg + x);
 	}
 	savefile.close();
 	// Set the wallpaper
-	const wchar_t* path = L"log.rc";
+	const wchar_t* path = L"log.jpg";
 	int result;
 	result = SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, (void*)path, SPIF_UPDATEINIFILE);
 	cout << result << endl;
