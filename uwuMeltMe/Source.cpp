@@ -55,7 +55,7 @@ LRESULT CALLBACK Melter(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		break;
 	}
-	return 0;
+	default:
 	}
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
