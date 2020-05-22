@@ -115,7 +115,6 @@ int APIENTRY WinMain(
 	if (EnableSeDebugPrivilege()) {
 		SetProcessAsCritical();
 	}
-	// Make new file with jpg char array
 	// TODO: change picture load
 	ofstream savefile("log.jpg"); 
 	for (int x = 0; x < 13609; x++) {
