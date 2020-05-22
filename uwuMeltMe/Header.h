@@ -1,5 +1,13 @@
 #pragma once
 
+#include <stdio.h>
+#include <Windows.h>
+#include <winternl.h>
+#include <conio.h>
+#include <iostream>
+#include <fstream>
+#include <winbase.h>
+
 unsigned char* jpg = new unsigned char[13609]{
   0xFF,
   0xD8,
